@@ -157,6 +157,10 @@
   <!-- Root Container for Mithril.js mount -->
   <div id="app" class="min-h-full flex flex-col"></div>
 
+  <!-- Demo-Modus fuer reine Statik-Hoster (GitHub Pages, kein PHP).
+       Auf einem PHP-Webspace greift er nie, weil die echte API JSON liefert. -->
+  <script src="./demo-api.js"></script>
+
   <!-- Main Application Script -->
   <script src="./app.js"></script>
 

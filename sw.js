@@ -4,13 +4,14 @@
  * Caches application shell and enables offline viewing of own bookings.
  */
 
-const CACHE_NAME = 'cstrsk-workspace-v1';
+const CACHE_NAME = 'cstrsk-workspace-v2';
 const API_CACHE_NAME = 'cstrsk-api-offline-v1';
 
 const STATIC_ASSETS = [
   './',
   './index.html',
   './app.js',
+  './demo-api.js',
   './manifest.json',
   './logo.svg',
   './icon.svg',

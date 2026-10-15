@@ -1,0 +1,6 @@
+# Laufzeitdaten - Datenbank entsteht beim ersten Aufruf neu
+data/*.sqlite
+data/*.sqlite-journal
+data/*.db
+*.log
+__pycache__/

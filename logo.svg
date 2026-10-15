@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 50" fill="none">
+  <!-- cstrsk.de Workspace Branding Logo -->
+  <rect x="2" y="5" width="40" height="40" rx="10" fill="#0F172A"/>
+  <rect x="5" y="8" width="34" height="34" rx="8" fill="#1A73E8"/>
+  <!-- Stylized C / Terminal glyph -->
+  <path d="M28 17H16C13.7909 17 12 18.7909 12 21V29C12 31.2091 13.7909 33 16 33H28" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+  <rect x="22" y="24" width="6" height="3" rx="1.5" fill="#F59E0B"/>
+  <text x="50" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="22" font-weight="800" fill="#1A73E8" letter-spacing="-0.5">cstrsk<tspan fill="#F59E0B">.</tspan><tspan font-size="16" font-weight="600" fill="#60A5FA">de</tspan></text>
+  <text x="144" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#6B7280" letter-spacing="1.2">WORKSPACE</text>
+</svg>

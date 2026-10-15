@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="de" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  
+  <title>cstrsk.de Workspace & Raum-Buchung</title>
+  <meta name="description" content="DSGVO-konformes Buchungssystem für Seminarräume, Einzeltische und Shared-Workspace-Plätze. Open Source unter GNU AGPLv3 von cstrsk.de." />
+  
+  <!-- OpenGraph & Meta -->
+  <meta property="og:title" content="cstrsk.de Workspace & Raum-Buchung" />
+  <meta property="og:description" content="DSGVO-konformes Buchungssystem für Seminarräume, Einzeltische und Shared-Workspace-Plätze. Open Source unter GNU AGPLv3 (cstrsk.de)." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  
+  <!-- PWA Capabilities -->
+  <meta name="theme-color" content="#1A73E8" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="cstrskSpace" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+  <link rel="icon" type="image/svg+xml" href="./logo.svg" />
+  <link rel="icon" type="image/png" sizes="192x192" href="./pwa-192x192.png" />
+
+  <!-- Tailwind CSS & Accessible Theme Config -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              blue: '#1A73E8',
+              bluedark: '#1557B0',
+              bluelight: '#60A5FA',
+              bgLight: '#F8F9FA',
+              cardLight: '#FFFFFF',
+              textLight: '#1F2937',
+              canvasDark: '#0F172A',
+              surfaceDark: '#1E2937',
+              surfaceDarkElevated: '#334155',
+              textDark: '#F9FAFB',
+              borderLight: '#E5E7EB',
+              borderDark: '#334155'
+            },
+            status: {
+              availText: '#065F46',
+              availBg: '#ECFDF5',
+              availBorder: '#A7F3D0',
+              availDot: '#10B981',
+              availDarkText: '#6EE7B7',
+              availDarkBg: '#064E3B',
+
+              bookedText: '#991B1B',
+              bookedBg: '#FEF2F2',
+              bookedBorder: '#FECACA',
+              bookedDot: '#EF4444',
+              bookedDarkText: '#FCA5A5',
+              bookedDarkBg: '#7F1D1D',
+
+              pendingText: '#92400E',
+              pendingBg: '#FFFBEB',
+              pendingBorder: '#FDE68A',
+              pendingDot: '#F59E0B',
+              pendingDarkText: '#FCD34D',
+              pendingDarkBg: '#78350F'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --color-primary: #1A73E8;
+      --color-primary-hover: #1557B0;
+      --color-primary-light: #60A5FA;
+      --color-canvas: #F8F9FA;
+      --color-card: #FFFFFF;
+      --color-text: #1F2937;
+      --color-text-muted: #4B5563;
+      --color-border: #E5E7EB;
+
+      /* Semantic Status Light (WCAG AA >= 4.5:1) */
+      --status-available-text: #065F46;
+      --status-available-bg: #ECFDF5;
+      --status-available-border: #A7F3D0;
+      --status-available-dot: #10B981;
+
+      --status-booked-text: #991B1B;
+      --status-booked-bg: #FEF2F2;
+      --status-booked-border: #FECACA;
+      --status-booked-dot: #EF4444;
+
+      --status-pending-text: #92400E;
+      --status-pending-bg: #FFFBEB;
+      --status-pending-border: #FDE68A;
+      --status-pending-dot: #F59E0B;
+    }
+    .dark {
+      --color-primary: #60A5FA;
+      --color-primary-hover: #93C5FD;
+      --color-primary-light: #BFDBFE;
+      --color-canvas: #0F172A;
+      --color-card: #1E2937;
+      --color-text: #F9FAFB;
+      --color-text-muted: #94A3B8;
+      --color-border: #334155;
+
+      /* Semantic Status Dark (Subdued pastel on deep container, >= 4.5:1) */
+      --status-available-text: #6EE7B7;
+      --status-available-bg: #064E3B;
+      --status-available-border: #047857;
+      --status-available-dot: #34D399;
+
+      --status-booked-text: #FCA5A5;
+      --status-booked-bg: #7F1D1D;
+      --status-booked-border: #991B1B;
+      --status-booked-dot: #F87171;
+
+      --status-pending-text: #FCD34D;
+      --status-pending-bg: #78350F;
+      --status-pending-border: #92400E;
+      --status-pending-dot: #FBBF24;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    /* Custom Scrollbar for Time Grid */
+    ::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1A73E8;
+      border-radius: 3px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: #60A5FA;
+    }
+  </style>
+
+  <!-- Mithril.js Framework & Streams (Zero Build Step) -->
+  <script src="https://cdn.jsdelivr.net/npm/mithril@2.2.2/mithril.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mithril@2.2.2/stream/stream.min.js"></script>
+  <!-- Standard Offline-Ready QR-Code Generator -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+</head>
+<body class="h-full bg-[#F8F9FA] text-[#1F2937] dark:bg-[#0F172A] dark:text-[#F9FAFB] transition-colors duration-200">
+  <!-- Root Container for Mithril.js mount -->
+  <div id="app" class="min-h-full flex flex-col"></div>
+
+  <!-- Main Application Script -->
+  <script src="./app.js"></script>
+
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then((reg) => {
+            console.log('cstrsk PWA ServiceWorker registriert:', reg.scope);
+          })
+          .catch((err) => {
+            console.warn('ServiceWorker Registrierung fehlgeschlagen:', err);
+          });
+      });
+    }
+  </script>
+</body>
+</html>

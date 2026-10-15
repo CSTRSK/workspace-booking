@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/db.php';
 
-$pdo = getDbConnection();
+$pdo = getDb();
 
 // Get settings
 $stmt = $pdo->query('SELECT "key", "value" FROM system_settings');

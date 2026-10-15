@@ -725,7 +725,7 @@
             class: 'flex items-center gap-3 cursor-pointer',
             onclick: () => { State.currentTab = 'search'; }
           }, [
-            m('img', { src: '/logo.svg', alt: 'cstrsk.de Logo', class: 'h-8 w-auto' }),
+            m('img', { src: './logo.svg', alt: 'cstrsk.de Logo', class: 'h-8 w-auto' }),
             m('span', {
               class: 'hidden sm:inline-block text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 border-l border-gray-300 dark:border-gray-700 pl-3'
             }, 'Workspace Booking')

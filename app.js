@@ -342,7 +342,7 @@
 
     async checkAuth() {
       try {
-        const data = await this.request('../api/auth.php?action=me');
+        const data = await this.request('./api/auth.php?action=me');
         State.user = data.user;
         State.csrfToken = data.csrf_token;
       } catch (e) {
@@ -351,7 +351,7 @@
     },
 
     async login(email, password) {
-      const data = await this.request('../api/auth.php?action=login', {
+      const data = await this.request('./api/auth.php?action=login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -362,7 +362,7 @@
     },
 
     async register(payload) {
-      const data = await this.request('../api/auth.php?action=register', {
+      const data = await this.request('./api/auth.php?action=register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -373,14 +373,14 @@
     },
 
     async logout() {
-      await this.request('../api/auth.php?action=logout');
+      await this.request('./api/auth.php?action=logout');
       State.user = null;
       showToast('Erfolgreich abgemeldet.', 'info');
       State.currentTab = 'search';
     },
 
     async loginSso(provider, customData = {}) {
-      const data = await this.request('../api/auth.php?action=sso_login', {
+      const data = await this.request('./api/auth.php?action=sso_login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ provider, ...customData })
@@ -391,7 +391,7 @@
     },
 
     async loginLdap(username, password, domain) {
-      const data = await this.request('../api/auth.php?action=ldap_login', {
+      const data = await this.request('./api/auth.php?action=ldap_login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password, domain })
@@ -402,7 +402,7 @@
     },
 
     async testLdap(ldapConfig = {}) {
-      const data = await this.request('../api/admin.php?action=test_ldap', {
+      const data = await this.request('./api/admin.php?action=test_ldap', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(ldapConfig)
@@ -457,7 +457,7 @@
       if (!State.user) return;
       State.loadingBookings = true;
       try {
-        const data = await this.request('../api/bookings.php');
+        const data = await this.request('./api/bookings.php');
         State.myBookings = data.bookings || [];
         // Offline-Cache für PWA
         localStorage.setItem('cstrsk_my_bookings_' + State.user.id, JSON.stringify(State.myBookings));
@@ -474,7 +474,7 @@
     },
 
     async createBooking(payload) {
-      return await this.request('../api/bookings.php', {
+      return await this.request('./api/bookings.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -488,7 +488,7 @@
         });
       } catch (err) {
         // Robust fallback to POST action=cancel if DELETE is blocked
-        return await this.request('../api/bookings.php?action=cancel', {
+        return await this.request('./api/bookings.php?action=cancel', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ id: bookingId, booking_id: bookingId, reason: reason })
@@ -497,7 +497,7 @@
     },
 
     async checkinCode(code) {
-      return await this.request('../api/bookings.php?action=checkin', {
+      return await this.request('./api/bookings.php?action=checkin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ check_in_code: code })
@@ -505,7 +505,7 @@
     },
 
     async joinWaitlist(payload) {
-      return await this.request('../api/waitlist.php', {
+      return await this.request('./api/waitlist.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -514,7 +514,7 @@
 
     async loadSettings() {
       try {
-        const res = await this.request('../api/settings.php');
+        const res = await this.request('./api/settings.php');
         if (res && res.settings) {
           State.settings = res.settings;
           State.adminSettings = { ...res.settings, ...(State.adminSettings || {}) };
@@ -528,19 +528,19 @@
       if (!State.user || (State.user.role !== 'admin' && State.user.role !== 'staff')) return;
       try {
         if (State.adminTab === 'dashboard') {
-          const res = await this.request('../api/admin.php?tab=dashboard');
+          const res = await this.request('./api/admin.php?tab=dashboard');
           State.adminStats = res.stats;
         } else if (State.adminTab === 'users') {
-          const res = await this.request('../api/admin.php?tab=users');
+          const res = await this.request('./api/admin.php?tab=users');
           State.adminUsers = res.users;
         } else if (State.adminTab === 'bookings') {
-          const res = await this.request('../api/bookings.php?all=1');
+          const res = await this.request('./api/bookings.php?all=1');
           State.adminAllBookings = res.bookings;
         } else if (State.adminTab === 'blocks') {
-          const res = await this.request('../api/admin.php?tab=blocks');
+          const res = await this.request('./api/admin.php?tab=blocks');
           State.adminBlocks = res.blocks;
         } else if (State.adminTab === 'settings') {
-          const res = await this.request('../api/admin.php?tab=settings');
+          const res = await this.request('./api/admin.php?tab=settings');
           State.adminSettings = res.settings;
           State.settings = res.settings;
         }
@@ -1401,7 +1401,7 @@
           ]),
           m('div', { class: 'flex items-center gap-2' }, [
             m('a', {
-              href: '../api/export.php?format=csv',
+              href: './api/export.php?format=csv',
               download: 'cstrsk_buchungen.csv',
               class: 'px-3 py-2 rounded-lg bg-[#1A73E8] text-white text-xs font-semibold hover:bg-[#1557B0] transition shadow flex items-center gap-1.5'
             }, [
@@ -1555,7 +1555,7 @@
                   m('button', {
                     class: 'px-2.5 py-1 rounded bg-green-600 text-white font-semibold hover:bg-green-700',
                     onclick: async () => {
-                      await API.request('../api/admin.php?action=approve_booking', {
+                      await API.request('./api/admin.php?action=approve_booking', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ booking_id: b.id, approved: true })
@@ -1567,7 +1567,7 @@
                   m('button', {
                     class: 'px-2.5 py-1 rounded bg-red-600 text-white font-semibold hover:bg-red-700',
                     onclick: async () => {
-                      await API.request('../api/admin.php?action=approve_booking', {
+                      await API.request('./api/admin.php?action=approve_booking', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ booking_id: b.id, approved: false })
@@ -1685,7 +1685,7 @@
                 class: 'px-2 py-1 rounded bg-gray-50 dark:bg-[#0F172A] border border-gray-300 dark:border-gray-700 font-semibold',
                 value: u.role,
                 onchange: async (e) => {
-                  await API.request('../api/admin.php?action=update_user_role', {
+                  await API.request('./api/admin.php?action=update_user_role', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ user_id: u.id, role: e.target.value })
@@ -1705,7 +1705,7 @@
                 class: 'w-20 px-2 py-1 rounded bg-gray-50 dark:bg-[#0F172A] border border-gray-300 dark:border-gray-700',
                 value: u.credits,
                 onchange: async (e) => {
-                  await API.request('../api/admin.php?action=update_user_role', {
+                  await API.request('./api/admin.php?action=update_user_role', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ user_id: u.id, role: u.role, credits: parseInt(e.target.value) || 0 })
@@ -2247,7 +2247,7 @@
               m('button', {
                 type: 'button',
                 class: 'px-2 py-0.5 rounded text-[11px] bg-white dark:bg-[#1E2937] border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition',
-                onclick: () => { s.qr_api_url_template = '../api/qrcode.php?data={data}&size={size}&format=svg'; }
+                onclick: () => { s.qr_api_url_template = './api/qrcode.php?data={data}&size={size}&format=svg'; }
               }, 'Interner Server-Proxy')
             ])
           ]),
@@ -2316,7 +2316,7 @@
         m('button', {
           class: 'px-5 py-2.5 rounded-lg bg-[#1A73E8] text-white text-xs font-bold hover:bg-[#1557B0] shadow-sm transition',
           onclick: async () => {
-            await API.request('../api/admin.php?action=save_settings', {
+            await API.request('./api/admin.php?action=save_settings', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(s)
@@ -3274,7 +3274,7 @@
           class: 'px-4 py-2 rounded-lg bg-[#1A73E8] text-white font-bold',
           onclick: async () => {
             try {
-              await API.request('../api/admin.php?action=save_resource', {
+              await API.request('./api/admin.php?action=save_resource', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(r)
@@ -3348,7 +3348,7 @@
           class: 'px-4 py-2 rounded-lg bg-red-600 text-white font-bold',
           onclick: async () => {
             try {
-              await API.request('../api/admin.php?action=create_block', {
+              await API.request('./api/admin.php?action=create_block', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -3391,7 +3391,7 @@
         m('p', 'Sie haben jederzeit das Recht auf Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17) sowie Datenübertragbarkeit (Art. 20 DSGVO).'),
         State.user ? m('div', { class: 'pt-2 flex flex-col gap-2' }, [
           m('a', {
-            href: '../api/user.php?action=export_data',
+            href: './api/user.php?action=export_data',
             download: 'meine_daten_export.json',
             class: 'p-2 rounded bg-gray-100 dark:bg-[#0F172A] text-[#1A73E8] dark:text-[#60A5FA] font-semibold text-center'
           }, '📥 Meine personenbezogenen Daten exportieren (Art. 20 DSGVO)'),
@@ -3403,7 +3403,7 @@
                 e.target.innerText = '⚠️ Wirklich unwiderruflich löschen? (Klicken zum Bestätigen)';
                 return;
               }
-              await API.request('../api/user.php?action=delete_account', {
+              await API.request('./api/user.php?action=delete_account', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ confirm_deletion: true })

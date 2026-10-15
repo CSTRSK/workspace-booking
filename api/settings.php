@@ -5,7 +5,7 @@ require_once __DIR__ . '/db.php';
 
 $pdo = getDbConnection();
 
-$stmt = $pdo->query('SELECT key, value FROM system_settings');
+$stmt = $pdo->query('SELECT "key", "value" FROM system_settings');
 $settings = [];
 while ($row = $stmt->fetch()) {
     $settings[$row['key']] = $row['value'];

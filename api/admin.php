@@ -120,7 +120,7 @@ function handleAdminGet(PDO $pdo): void {
             break;
 
         case 'settings':
-            $stmt = $pdo->query('SELECT key, value FROM system_settings');
+            $stmt = $pdo->query('SELECT "key", "value" FROM system_settings');
             $settings = [];
             while ($row = $stmt->fetch()) {
                 $settings[$row['key']] = $row['value'];
@@ -211,7 +211,7 @@ function handleAdminPost(PDO $pdo, array $adminUser, string $action): void {
 
         case 'save_settings':
             foreach ($input as $k => $v) {
-                $stmt = $pdo->prepare('INSERT OR REPLACE INTO system_settings (key, value) VALUES (:k, :v)');
+                $stmt = $pdo->prepare('INSERT OR REPLACE INTO system_settings ("key", "value") VALUES (:k, :v)');
                 $stmt->execute([':k' => $k, ':v' => (string)$v]);
             }
             jsonResponse(['success' => true, 'message' => 'Einstellungen gespeichert.']);

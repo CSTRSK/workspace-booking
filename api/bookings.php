@@ -89,7 +89,7 @@ function handleCreateBooking(PDO $pdo): void {
 
     // Gast-Buchung prüfen, falls nicht eingeloggt
     if (!$user) {
-        $stmtSetting = $pdo->query('SELECT value FROM system_settings WHERE key = "allow_guest_booking"');
+        $stmtSetting = $pdo->query('SELECT "value" FROM system_settings WHERE "key" = \'allow_guest_booking\'');
         $allowGuest = (int)($stmtSetting->fetchColumn() ?: 1);
         if (!$allowGuest) {
             errorResponse('Gast-Buchungen sind deaktiviert. Bitte melden Sie sich an.', 401);
@@ -425,7 +425,7 @@ function handleCancelBooking(PDO $pdo): void {
     }
 
     // Stornofrist prüfen (z.B. mindestens 2 Stunden vorher)
-    $stmtCutoff = $pdo->query('SELECT value FROM system_settings WHERE key = "cancellation_cutoff_hours"');
+    $stmtCutoff = $pdo->query('SELECT "value" FROM system_settings WHERE "key" = \'cancellation_cutoff_hours\'');
     $cutoffHours = (int)($stmtCutoff->fetchColumn() ?: 2);
 
     $startTs = strtotime($booking['start_time']);
